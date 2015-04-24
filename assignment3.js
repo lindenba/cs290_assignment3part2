@@ -1,8 +1,9 @@
+var req;
 //only return 1 to 5 page numbers
 function getGists() {
   //url to get gists set to variable url
   var url = 'https://api.github.com/gists';
-  var pageNums = document.getElementsById('pageNum').value;
+  var pageNums = document.getElementById('pageNum');
   //only get 1 to 5 pages from gist
   if (pageNums < 1 || pageNums > 5)
   {
@@ -31,5 +32,41 @@ function getGists() {
 //make an AJAX request and store results
 function reqGists(url, page)
 {
-  var 
-}
+  var temp = 'results' + page;
+  //make a request
+  if (window.XMLHttpRequest) {
+    var req = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    req = new ActiveXObject('Microsoft.XMLHTTP');
+  }
+  if (!req)
+  {
+    throw 'HTTP request could not be created.';
+  }
+  req.onreadystatechange = function()
+  {
+    if (req.readyState === 4)
+    {
+      if (req.status === 200)
+      {
+        var gists = this.responseText;
+        var json = JSON.parse(gists);
+  //      filterGists(page, json);
+    //    printGists(page);
+      }
+    }
+    // else {
+    //   console.log('Not ready, ready state is ' + this.readyState);
+    // }
+  };
+  req.open('GET', 'https://api.github.com/gists', true);
+  req.send();
+  }
+  //pushes gist to the session storage
+  // function filterGists(page, json)
+  // {
+  //
+  // }
+  // function printGists(page) {
+  //   var temp = 'results' + page;
+  // }

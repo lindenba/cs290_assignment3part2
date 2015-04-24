@@ -4,25 +4,34 @@
     <meta charset="utf-8">
     <title>Gists Assignment</title>
     <script src="assignment3.js"></script>
+    <link rel="stylesheet" type="text/css" href="assignment3.css">
   </head>
   <body>
     <div id="output"></div>
     <form>
-      <input type="radio" id="javeascipt">JavaScript</input>
-      <input type="radio" id="python">Python</input>
-      <input type="radio" id="json">JSON</input>
-      <input type="radio" id="sql">SQL</input>
+      <input type="radio" name="javeascipt">JavaScript</input>
+      <input type="radio" name="python">Python</input>
+      <input type="radio" name="json">JSON</input>
+      <input type="radio" name="sql">SQL</input>
       |  Number of pages:
       <input type="number" name="pages" min="1" max="5">
-      <input type="button" name="gists" value="Fetch Gists" onclick="getGists()" />
+      <input type="button" name="gists" value="Fetch Gists" onclick="reqGists()" />
     </form>
     <section>
-      <ul id="search-results">
-      </ul>
+    <div id="gists">
+      <p>GISTS</p>
+      <table>
+      <tbody id="search-results"></tbody>
+      </table>
+    </div>
     </section>
-    <section>
-      <ul id="favorites">
-      </ul>
-    </section>
+    <aside>
+      <div id="fav-gist">
+        <p>Favorite GISTS</p>
+        <table>
+      <tbody id="favorites"></tbody>
+      </table>
+    </div>
+  </aside>
   </body>
 </html>
