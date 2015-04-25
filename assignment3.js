@@ -41,7 +41,7 @@ function reqGists(url, page)
   }
   if (!req)
   {
-    throw 'HTTP request could not be created.';
+    throw 'Unable to create HttpRequest.';
   }
   req.onreadystatechange = function()
   {
@@ -51,22 +51,114 @@ function reqGists(url, page)
       {
         var gists = this.responseText;
         var json = JSON.parse(gists);
-  //      filterGists(page, json);
-    //    printGists(page);
+        loopGists(page, json);
+        outputGists(page);
       }
     }
-    // else {
-    //   console.log('Not ready, ready state is ' + this.readyState);
-    // }
   };
   req.open('GET', 'https://api.github.com/gists', true);
   req.send();
   }
   //pushes gist to the session storage
-  // function filterGists(page, json)
-  // {
-  //
-  // }
-  // function printGists(page) {
-  //   var temp = 'results' + page;
-  // }
+function loopGists(page, json)
+  {
+    var fileholder, descrip, files, filename;
+    var saveGist = true;
+    var allUnchecked = true;
+    if ((document.getElementById('python').checked) ||
+    (document.getElementById('json').checked) ||
+    (document.getElementById('javascript').checked) ||
+    (document.getElementById('sql').checked))
+    {
+      allUnchecked = false;
+    }
+    //any boxes are checked
+    if (!allUnchecked)
+    {
+      for (var x in sessionStorage)
+      {
+        var checkText = sessionStorage.getItem(x);
+        if (checkText == null)
+        {
+          break;
+        }
+      }
+    }
+    //start loop through json results
+    for (var i in json)
+    {
+      var language = [];
+      descrip = json[i].descrip;
+      href = json[i].html_url;
+      //get files object
+      files = json[i].files;
+      //get the filename;
+      for (var f in files)
+      {
+        fileholder = files[f];
+        filename = fileholder.filename;
+      }
+      var storeItem = {
+        'filename': filename,
+        'description': descrip,
+        'href': href,
+        'language': language,
+        'page': page
+      };
+      var keyname = json[i].id;
+      //if keyname has a match already in favorites don't add
+      if (localStorage.getItem(keyname))
+      {
+        saveGist = false;
+      }
+      else
+      {
+        if (!allUnchecked)
+        {
+          saveGist = false;
+        }
+      }
+      if (saveGist)
+      {
+        sessionStorage.setItem(keyname, JSON.stringify(storeItem));
+      }
+      language = null;
+      saveGist = true;
+    }//end loop through json results
+    console.log('how about here');
+  }
+function outputGists(page) {
+    var temp = 'results' + page;
+    var description, a, text, tr, th, button, json, pageNum;
+    var tempOuter = document.getElementById(temp);
+    pageNum = 'Page' + page;
+    if (document.getElementById(pageNum))
+    {
+      var hide = document.getElementById(pageNum);
+      console.log('Page exists');
+      tempOuter.removeChild(hide);
+    }
+  //  var sep = document.creatElement('sep');
+  //  sep.setAttribute('id', pageNum);
+    var table = document.createElement('table');
+    var tbody = document.createElement('tbody');
+    //loop through to create pages
+    for (var i in sessionStorage)
+    {
+      var json = JSON.parse(sessionStorage.getItem(i));
+      //code to fix browser inconsistencies
+      if (json == null)
+      {
+        break;
+      }
+      if (json.page == page)
+      {
+        //creat button element
+        button = document.createElement('input');
+        button.setAttribute('type', 'button');
+        button.setAttribute('value', 'FAV');
+        button.setAttribute('name', i);
+        button.setAttribute('onclick', 'faveRow(this.name)');
+      }
+    }
+  }

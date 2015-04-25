@@ -9,13 +9,18 @@
   <body>
     <div id="output"></div>
     <form>
-      <input type="radio" name="javeascipt">JavaScript</input>
-      <input type="radio" name="python">Python</input>
-      <input type="radio" name="json">JSON</input>
-      <input type="radio" name="sql">SQL</input>
+      <input type="checkbox" id="javascript">JavaScript</input>
+      <input type="checkbox" id="python">Python</input>
+      <input type="checkbox" id="json">JSON</input>
+      <input type="checkbox" id="sql">SQL</input>
       |  Number of pages:
-      <input type="number" name="pages" min="1" max="5">
-      <input type="button" name="gists" value="Fetch Gists" onclick="reqGists()" />
+      <select id="pageNum" name="page">
+        <option value="1">1</option>
+  	    <option value="2">2</option>
+  	    <option value="3">3</option>
+  	    <option value="4">4</option>
+  	    <option value="5">5</option>
+      <input type="button" name="gists" value="Search" onclick="reqGists()" />
     </form>
     <section>
     <div id="gists">
