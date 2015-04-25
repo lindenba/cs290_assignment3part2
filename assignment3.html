@@ -3,16 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Gists Assignment</title>
-    <script src="assignment3.js"></script>
+    <script src="assignment3.js">
+      function load()
+      {
+        alert("load event detected!");
+      }
+      window.onload = function();
+    </script>
     <link rel="stylesheet" type="text/css" href="assignment3.css">
   </head>
   <body>
     <div id="output"></div>
     <form>
-      <input type="checkbox" id="javascript">JavaScript</input>
-      <input type="checkbox" id="python">Python</input>
-      <input type="checkbox" id="json">JSON</input>
-      <input type="checkbox" id="sql">SQL</input>
+      <input type="checkbox" name="language" id="javascript">JavaScript</input>
+      <input type="checkbox" name="language" id="python">Python</input>
+      <input type="checkbox" name="language" id="json">JSON</input>
+      <input type="checkbox" name="language" id="sql">SQL</input>
       |  Number of pages:
       <select id="pageNum" name="page">
         <option value="1">1</option>
