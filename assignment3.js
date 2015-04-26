@@ -54,10 +54,16 @@ function reqGists(url, page)
 
 window.onload = function()
 {
-  console.log('Begin!');
-  sessionStorage.clear();
-  createDisplaylist();
-}
+//  document.getElementById('output').innerHTML= 'Gists Assignment';
+  if (localStorage.length > 0)
+  {
+    createDisplaylist(document.getElementById('fav-gist'));
+  }
+  // else
+  // {
+  //   document.getElementById('fav-gist').innerHTML = ' ';
+  // }
+};
 
 function urlStringify(param, i) {
   var string = [];
@@ -103,29 +109,10 @@ function createResultList(array, list)
   conDiv.appendChild(fButton);
   ul.appendChild(conDiv);
   list.appendChild(ul);
-  // var favoriteButton = document.createElement('input');
-  // favoriteButton.innerHTML = '+';
-  // favoriteButton.type = 'button';
-  // favoriteButton.value = 'favorite';
-  // favoriteButton.setAttribute('onclick', 'addtoFavorite(this.parentNode)');
-  // conDiv.appendChild(favoriteButton);
-  // favoriteButton.onclick = function()
-  // {
-  //   var conDiv = this.getAttribute('onclick');
-  // //  var tobeFavoredGist = findById('');
-  //   for (var i = 0; i < gistsArray.length; i++)
-  //   {
-  //     if (gistsArray[i].id === favoriteButton.id)
-  //     {
-  //     localStorage.setItem(favoriteButton.id, JSON.stringify(gistsArray[i]));
-  //       break;
-  //     }
-  //   }
-  // };
-  // list.appendChild(conDiv);
   }
   return list;
 }
+
 //create the display list for the favorites clicked on
 function createDisplaylist()
 {
@@ -134,14 +121,14 @@ function createDisplaylist()
   for (var key in localStorage)
   {
     var temp = document.createElement('li');
-    temp.innerHTML = localStorage[key];
+    temp.innerHTML = localStorage.getItem[key];
     this.dButton = document.createElement('button');
     this.dButton.innerHTML = 'Remove Favorite';
     this.dButton.onclick = function()
     {
-      this.parentNode.style.display = 'none';
+     this.parentNode.style.display = 'none';
       localStorage.clear();
-      createDisplaylist();
+     createDisplaylist();
     };
     temp.appendChild(dButton);
     ul.appendChild(temp);
